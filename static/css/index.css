@@ -156,3 +156,13 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+@media screen and (max-width: 768px) {
+  .publication-title {
+    font-size: 1.75rem !important;
+  }
+}
+
+.title-highlight {
+  color: #cb6b57;
+}

@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Speed on Demand lets a single imitation policy run 1x to 3x faster than its demonstrations by compensating robot-controller dynamics with a learned neural dynamics model.">
+  <meta name="description" content="Speed on Demand lets a single imitation policy run up to 5x faster than its demonstrations by compensating robot-controller dynamics with a learned neural dynamics model.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Speed on Demand: Faster-than-Demonstration Imitation via Neural Robot Dynamics Model</title>
+  <title>Speed on Demand: Faster-than-Demonstration Imitation via a Neural Robot Dynamics Model</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=4">
   <link rel="icon" href="./static/images/favicon.svg">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,7 +30,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Speed on Demand: Faster-than-Demonstration Imitation via Neural Robot Dynamics Model</h1>
+          <h1 class="title is-1 publication-title">Speed on Demand:<br>Faster-than-Demonstration Imitation<br class="is-hidden-mobile"> via a <span class="title-highlight">Neural Robot Dynamics Model</span></h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">Anonymous Authors</span>
           </div>
@@ -58,13 +58,20 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        TODO: one-line teaser caption.
-      </h2>
+      <img src="./static/images/teaser.png?v=2" alt="Speed on Demand teaser" style="width: 100%;">
+      <div class="content has-text-justified">
+        <p>
+          <b>Left</b>: naively sending action commands faster results in an increased tracking error
+          between commanded action (red) and the actual reach (blue dash) at inference time, resulting
+          in task failure.
+          <b>Middle</b>: a neural dynamics model of the robot predicts the actual reach under
+          acceleration during BC policy fine-tuning.
+          The loss between predicted and demonstrated positions is backpropagated into the policy,
+          which learns compensated commands that overshoot or undershoot the demonstrated target whose
+          resulting reached positions match the demonstrated trajectory under accelerated execution.
+          <b>Right</b>: the fine-tuned policy reaches the demonstrated trajectory at the raised rate.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -96,12 +103,11 @@
             demonstrated trajectory under accelerated execution.
           </p>
           <p>
-            The resulting policy can be conditioned on a continuous speedup factor and supports
-            execution from 1&times; to 3&times; the demonstration frequency with a single policy,
-            without per-frequency retraining.
-            We validate Speed on Demand on two real robot platforms with different
-            robot&ndash;controller configurations, demonstrating the generalizability of our framework
-            across different execution dynamics.
+            A single policy, conditioned on a continuous speedup factor, executes at up to 5&times; the
+            demonstration frequency on CRANE-X7 with 80% task success, where both baselines fall to 27%
+            or below.
+            On Franka Research 3 with impedance control, the same method reaches 3.8&times; the
+            demonstration frequency, and task success is preserved up to 2.5&times;.
           </p>
         </div>
       </div>
@@ -121,6 +127,38 @@
       </div>
     </div>
     <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <img src="./static/images/method_overview.png" alt="Dynamics-aware fine-tuning overview"
+             style="width: 100%;">
+        <div class="content has-text-justified">
+          <p>
+            <b>Dynamics-aware fine-tuning.</b>
+            <b>Left</b>: the trainable policy <i>&pi;</i><sub>&theta;</sub> predicts a chunk of joint
+            targets from the observation and the desired speedup.
+            The frozen neural dynamics model <i>&#285;</i><sub>&phi;</sub> maps each target to the joint
+            position the robot will reach at that control frequency.
+            The reached-state loss &#8466;<sub>reach</sub> between predicted and demonstrated joint
+            positions is backpropagated through <i>&#285;</i><sub>&phi;</sub> into
+            <i>&pi;</i><sub>&theta;</sub> (red dashed arrows).
+            <b>Right</b>: at the demonstration frequency, the reached trajectory (yellow triangles)
+            follows the desired trajectory (red squares).
+            At a higher frequency, the uncompensated command (blue circles) is tracked with a lag and
+            the reached trajectory deviates.
+            The fine-tuned policy commands targets offset from the desired trajectory, so the reached
+            trajectory matches it again.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
   </div>
 </section>
 
