@@ -19,12 +19,41 @@ body {
 
 
 .teaser .hero-body {
-  padding-top: 0;
+  padding-top: 3rem;
   padding-bottom: 3rem;
 }
 
+/* Full-width band separating the overview figure from the TLDR above. */
 .teaser {
-  font-family: 'Google Sans', sans-serif;
+  /* Match the figures (Keynote, Helvetica Neue). */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.teaser-header {
+  margin-bottom: 1.25rem;
+}
+
+.teaser-header .title {
+  font-family: inherit;
+}
+
+.teaser-card {
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.teaser-card img {
+  display: block;
+  width: 100%;
+}
+
+.teaser-caption {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #555;
 }
 
 
@@ -165,4 +194,129 @@ body {
 
 .title-highlight {
   color: #cb6b57;
+}
+
+/* TLDR panel: demos (left) -> policy at 1x-5x (right). */
+.tldr {
+  /* Match the figures (Keynote, Helvetica Neue). */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-top: 0;
+  padding-bottom: 2.5rem;
+}
+
+.tldr-text {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.tldr-panel {
+  display: grid;
+  grid-template-columns: 1fr auto 2fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+
+.tldr-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tldr-clip {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #000;
+}
+
+.tldr-clip video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tldr-speed-stack video {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.tldr-speed-stack video.is-active {
+  opacity: 1;
+}
+
+.tldr-label {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.45rem;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.tldr-speed-label {
+  font-size: 0.95rem;
+}
+
+.tldr-arrow {
+  font-size: 2rem;
+  color: #333;
+  line-height: 1;
+}
+
+.tldr-speeds {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 999px;
+}
+
+.tldr-speeds button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tldr-speeds button.is-active {
+  background: #fff;
+  color: #222;
+}
+
+@media screen and (max-width: 768px) {
+  .tldr-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .tldr-inputs {
+    flex-direction: row;
+  }
+
+  .tldr-inputs .tldr-clip {
+    flex: 1;
+  }
+
+  .tldr-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
 }

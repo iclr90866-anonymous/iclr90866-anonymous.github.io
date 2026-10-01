@@ -24,3 +24,34 @@ $(document).ready(function() {
     bulmaSlider.attach();
 
 })
+
+// TLDR panel: loop the selected speedup clip (5x by default); a speed button switches clips.
+$(document).ready(function() {
+    var $stack = $(".tldr-speed-stack");
+    if (!$stack.length) return;
+    var videos = $stack.find("video").get();
+    var $buttons = $stack.find(".tldr-speeds button");
+    var $label = $stack.find(".tldr-speed-label");
+    var current = videos.length - 1;
+
+    function show(i) {
+        videos[current].pause();
+        $(videos[current]).removeClass("is-active");
+        current = i;
+        var v = videos[i];
+        $(v).addClass("is-active");
+        v.currentTime = 0;
+        var p = v.play();
+        if (p && p.catch) p.catch(function() {});
+        $buttons.removeClass("is-active").eq(i).addClass("is-active");
+        var speed = i + 1;
+        var rate = speed === 1 ? "Demo rate" : speed + "&times; faster";
+        $label.html(rate + " &middot; " + (50 * speed) + "&nbsp;Hz &middot; Real time");
+    }
+
+    videos.forEach(function(v) { v.loop = true; });
+    $buttons.each(function(i) {
+        $(this).on("click", function() { show(i); });
+    });
+    show(current);
+});
