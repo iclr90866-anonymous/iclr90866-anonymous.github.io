@@ -244,6 +244,39 @@ body {
   display: block;
 }
 
+.tldr-speed-stack[hidden] {
+  display: none;
+}
+
+/* FR3 clips are 4:3; show them whole rather than cropping the mug. */
+.tldr-speed-stack.is-letterboxed video {
+  object-fit: contain;
+}
+
+.tldr-robot-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tldr-robot-tabs button {
+  border: 1px solid #e3e3e3;
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  background: #fff;
+  color: #555;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tldr-robot-tabs button.is-active {
+  background: #333;
+  border-color: #333;
+  color: #fff;
+}
+
 .tldr-speed-stack video {
   opacity: 0;
   transition: opacity 0.15s;
